@@ -1,0 +1,10 @@
+pub mod iam_backdoor_user;
+pub mod iam_backdoor_role;
+pub mod iam_create_admin_user;
+pub mod iam_create_backdoor_role;
+pub mod iam_create_user_login_profile;
+pub mod lambda_backdoor_function;
+pub mod lambda_layer_extension;
+pub mod lambda_overwrite_code;
+pub mod rolesanywhere_create_trust_anchor;
+pub mod sts_federation_token;

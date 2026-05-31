@@ -1,0 +1,3 @@
+pub mod blob_ransomware_client_encryption_scope;
+pub mod blob_ransomware_individual_file_deletion;
+pub mod resource_lock;
