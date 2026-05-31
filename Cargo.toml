@@ -7,12 +7,75 @@ authors = ["NHTanvir <naymulhasantanvir10@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/NHTanvir/lancer-stratus-red-team"
 
+[lib]
+name = "lancer_stratus_red_team"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lancer-stratus-red-team"
+path = "src/main.rs"
+
 [dependencies]
-clap = { version = "4", features = ["derive"] }
+# AWS SDK
+aws-config = { version = "1", features = ["behavior-version-latest"] }
+aws-sdk-iam = "1"
+aws-sdk-sts = "1"
+aws-sdk-ec2 = "1"
+aws-sdk-s3 = "1"
+aws-sdk-lambda = "1"
+aws-sdk-secretsmanager = "1"
+aws-sdk-ssm = "1"
+aws-sdk-cloudtrail = "1"
+aws-sdk-rds = "1"
+aws-sdk-route53 = "1"
+aws-sdk-sesv2 = "1"
+aws-sdk-organizations = "1"
+aws-sdk-rolesanywhere = "1"
+aws-sdk-bedrock = "1"
+aws-sdk-bedrockruntime = "1"
+aws-sdk-sagemaker = "1"
+aws-sdk-ec2instanceconnect = "1"
+aws-sdk-route53resolver = "1"
+
+# Kubernetes
+kube = { version = "3.1", features = ["runtime", "derive", "client"] }
+k8s-openapi = { version = "0.27", features = ["latest"] }
+
+
+# Async runtime
 tokio = { version = "1", features = ["full"] }
+
+# Registry — distributed static registration
+inventory = "0.3"
+
+# Serialisation
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# CLI
+clap = { version = "4", features = ["derive", "color", "env"] }
+indicatif = "0.17"
+colored = "2"
+
+# Filesystem / paths
+dirs = "5"
+tempfile = "3"
+
+# Error handling
 anyhow = "1"
+thiserror = "1"
+
+# Logging
 tracing = "0.1"
-tracing-subscriber = "0.3"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Misc
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+base64 = "0.22"
+hex = "0.4"
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+futures = "0.3"
 
 [profile.release]
 opt-level = 3

@@ -1,15 +1,37 @@
-//! lancer-stratus-red-team
-//! Rust clone of stratus-red-team. See plan.md (local, gitignored) for the spec.
-
+use std::sync::Arc;
 use clap::Parser;
+use lancer_stratus_red_team::cli::{Cli, Commands};
+use lancer_stratus_red_team::providers::CloudProviders;
 
-#[derive(Parser, Debug)]
-#[command(name = "lancer-stratus-red-team", version, about = "Rust clone of stratus-red-team")]
-struct Cli {}
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    tracing_subscriber::fmt()
+        .with_env_filter(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "warn".into()),
+        )
+        .init();
 
-fn main() -> anyhow::Result<()> {
-    tracing_subscriber::fmt::init();
-    let _cli = Cli::parse();
-    println!("lancer-stratus-red-team - scaffold ready. Implement per plan.md.");
+    let cli = Cli::parse();
+    let providers = Arc::new(CloudProviders::new());
+
+    match &cli.command {
+        Commands::List(args) => lancer_stratus_red_team::cli::list::run(args),
+        Commands::Show(args) => lancer_stratus_red_team::cli::show::run(args),
+        Commands::Status(args) => lancer_stratus_red_team::cli::status::run(args),
+        Commands::Warmup(args) => {
+            lancer_stratus_red_team::cli::warmup::run(args, Arc::clone(&providers)).await
+        }
+        Commands::Detonate(args) => {
+            lancer_stratus_red_team::cli::detonate::run(args, Arc::clone(&providers)).await
+        }
+        Commands::Revert(args) => {
+            lancer_stratus_red_team::cli::revert::run(args, Arc::clone(&providers)).await
+        }
+        Commands::Cleanup(args) => {
+            lancer_stratus_red_team::cli::cleanup::run(args, Arc::clone(&providers)).await
+        }
+    }
+
     Ok(())
 }

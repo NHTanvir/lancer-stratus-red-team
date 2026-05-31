@@ -1,0 +1,5 @@
+pub mod ec2_get_password_data;
+pub mod ec2_steal_instance_credentials;
+pub mod secretsmanager_batch_retrieve_secrets;
+pub mod secretsmanager_retrieve_secrets;
+pub mod ssm_retrieve_securestring_parameters;
